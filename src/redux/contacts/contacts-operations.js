@@ -10,7 +10,6 @@ import {
   deleteContactSuccess,
   deleteContactError,
 } from "./contacts-actions";
-import { toast } from "react-toastify";
 
 export const fetchContacts = () => (dispatch) => {
   dispatch(fetchContactsRequest());
@@ -22,11 +21,11 @@ export const fetchContacts = () => (dispatch) => {
       dispatch(fetchContactsError(error));
 
       if (error.response.status === 404) {
-        toast.info("There is no such user's collection!");
+        alert("There is no such user's collection!");
       } else if (error.response.status === 500) {
-        toast.error("Oops! Server error! Please try later!");
+        alert("Oops! Server error! Please try later!");
       } else {
-        toast.error("Something went wrong! Please reload the page!");
+        alert("Something went wrong! Please reload the page!");
       }
     });
 };
@@ -46,9 +45,9 @@ export const addContact = (name, number) => (dispatch) => {
       dispatch(addContactError(error));
 
       if (error.response.status === 400) {
-        toast.error("Contact creation error!");
+        alert("Contact creation error!");
       } else {
-        toast.error("Something went wrong! Please reload the page!");
+        alert("Something went wrong! Please reload the page!");
       }
     });
 };
@@ -63,11 +62,11 @@ export const deleteContact = (contactId) => (dispatch) => {
       dispatch(deleteContactError(error));
 
       if (error.response.status === 404) {
-        toast.info("There is no such user's collection!");
+        alert("There is no such user's collection!");
       } else if (error.response.status === 500) {
-        toast.error("Oops! Server error! Please try later!");
+        alert("Oops! Server error! Please try later!");
       } else {
-        toast.error("Something went wrong! Please reload the page!");
+        alert("Something went wrong! Please reload the page!");
       }
     });
 };

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { authOperations, authSelectors } from "../../redux/auth";
-import { toast } from "react-toastify";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import LoaderComponent from "../../components/LoaderComponent";
-import s from "./RegisterView.module.css";
+import styles from "./RegisterView.module.css";
 
 export default function RegisterView() {
   const dispatch = useDispatch();
@@ -32,9 +31,9 @@ export default function RegisterView() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name.trim() === "" || email.trim() === "" || password.trim() === "") {
-      return toast.error("💩 Please fill in all fields!");
+      return alert("💩 Please fill in all fields!");
     } else if (password.length < 7) {
-      return toast.info("Passwords must be at least 7 characters long!");
+      return alert("Passwords must be at least 7 characters long!");
     }
     dispatch(authOperations.register({ name, email, password }));
     setName("");
@@ -43,7 +42,7 @@ export default function RegisterView() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={s.form} autoComplete="off">
+    <form onSubmit={handleSubmit} className={styles.form} autoComplete="off">
       <TextField
         label="Name"
         variant="outlined"
@@ -52,7 +51,7 @@ export default function RegisterView() {
         name="name"
         value={name}
         onChange={handleChange}
-        className={s.textField}
+        className={styles.textField}
       />
 
       <TextField
@@ -63,7 +62,7 @@ export default function RegisterView() {
         name="email"
         value={email}
         onChange={handleChange}
-        className={s.textField}
+        className={styles.textField}
       />
 
       <TextField
@@ -74,7 +73,7 @@ export default function RegisterView() {
         name="password"
         value={password}
         onChange={handleChange}
-        className={s.textField}
+        className={styles.textField}
       />
 
       {!isLoading && (

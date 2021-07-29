@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { contactsOperations, contactsSelectors } from "../../redux/contacts";
-import { toast } from "react-toastify";
 import NumberFormat from "react-number-format";
 import Button from "@material-ui/core/Button";
 import LoaderComponent from "../LoaderComponent";
-import s from "./ContactForm.module.css";
+import styles from "./ContactForm.module.css";
 
 function ContactForm() {
   const dispatch = useDispatch();
@@ -48,11 +47,11 @@ function ContactForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (checkRepeatName(name)) {
-      return toast(`🤔 ${name} is already in the phonebook.`);
+      return alert(`🤔 ${name} is already in the phonebook.`);
     } else if (checkRepeatNumber(number)) {
-      return toast(`🤔 ${number} is already in the phonebook.`);
+      return alert(`🤔 ${number} is already in the phonebook.`);
     } else if (checkEmptyQuery(name, number)) {
-      return toast.info("😱 Enter the contact's name and number phone!");
+      return alert("😱 Enter the contact's name and number phone!");
     } else {
       dispatch(contactsOperations.addContact(name, number));
     }
@@ -65,11 +64,11 @@ function ContactForm() {
   };
 
   return (
-    <form className={s.form} onSubmit={handleSubmit}>
-      <label className={s.label}>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <label className={styles.label}>
         Name
         <input
-          className={s.input}
+          className={styles.input}
           type="text"
           name="name"
           value={name}
@@ -77,7 +76,7 @@ function ContactForm() {
           placeholder="Enter name"
         />
       </label>
-      <label className={s.label}>
+      <label className={styles.label}>
         Number
         <NumberFormat
           placeholder="Enter phone number"
@@ -88,7 +87,7 @@ function ContactForm() {
           name="number"
           value={number}
           onChange={handleChange}
-          className={s.input}
+          className={styles.input}
         />
       </label>
 
@@ -98,6 +97,7 @@ function ContactForm() {
           color="secondary"
           size="large"
           type="submit"
+          className={styles.btn}
         >
           Add contact
         </Button>

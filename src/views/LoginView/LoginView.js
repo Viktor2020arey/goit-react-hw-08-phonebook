@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { authOperations, authSelectors } from "../../redux/auth";
-import { toast } from "react-toastify";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import LoaderComponent from "../../components/LoaderComponent";
-import s from "./LoginView.module.css";
+import styles from "./LoginView.module.css";
 
 export default function LoginView() {
   const dispatch = useDispatch();
@@ -33,7 +32,7 @@ export default function LoginView() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email.trim() === "" || password.trim() === "") {
-      return toast.error("💩 Please fill in all fields!");
+      return alert("💩 Please fill in all fields!");
     }
     dispatch(authOperations.logIn({ email, password }));
     setEmail("");
@@ -41,7 +40,7 @@ export default function LoginView() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={s.form} autoComplete="off">
+    <form onSubmit={handleSubmit} className={styles.form} autoComplete="off">
       <TextField
         label="Email"
         variant="outlined"
@@ -50,7 +49,7 @@ export default function LoginView() {
         name="email"
         value={email}
         onChange={handleChange}
-        className={s.textField}
+        className={styles.textField}
       />
 
       <TextField
@@ -61,7 +60,7 @@ export default function LoginView() {
         name="password"
         value={password}
         onChange={handleChange}
-        className={s.textField}
+        className={styles.textField}
       />
 
       {!isLoading && (

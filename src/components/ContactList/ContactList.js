@@ -4,7 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { motion, AnimatePresence } from "framer-motion";
 import { variants } from "../../utils/motionVar";
-import s from "./ContactList.module.css";
+import styles from "./ContactList.module.css";
 
 function ContactList() {
   const dispatch = useDispatch();
@@ -14,11 +14,11 @@ function ContactList() {
   return (
     <>
       {contacts.length > 0 && (
-        <motion.ul className={s.list}>
+        <motion.ul className={styles.list}>
           <AnimatePresence>
             {visibleContacts.map(({ id, name, number }) => (
               <motion.li
-                className={s.item}
+                className={styles.item}
                 key={id}
                 initial="initial"
                 animate="animate"
@@ -26,11 +26,11 @@ function ContactList() {
                 transition="transition"
                 variants={variants}
               >
-                <p className={s.info}>
-                  <b>{name}</b>
-                  <em>{number}</em>
+                <p className={styles.text}>
+                  {name}: {number}
                 </p>
                 <IconButton
+                  className={styles.btn}
                   aria-label="delete"
                   color="secondary"
                   type="button"
