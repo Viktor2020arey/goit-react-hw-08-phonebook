@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { contactsOperations, contactsSelectors } from "../../redux/contacts";
+import { toast } from "react-toastify";
+import NumberFormat from "react-number-format";
+import Button from "@material-ui/core/Button";
 import LoaderComponent from "../LoaderComponent";
-import styles from "./ContactForm.module.css";
+import s from "./ContactForm.module.css";
 
 function ContactForm() {
   const dispatch = useDispatch();
@@ -42,20 +45,14 @@ function ContactForm() {
     return name.trim() === "" || number.trim() === "";
   };
 
-  const checkValidNumber = (number) => {
-    return !/\d{3}[-]\d{2}[-]\d{2}/g.test(number);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (checkRepeatName(name)) {
-      alert(`🤔 ${name} is already in the phonebook.`);
+      return toast(`🤔 ${name} is already in the phonebook.`);
     } else if (checkRepeatNumber(number)) {
-      alert(`🤔 ${number} is already in the phonebook.`);
+      return toast(`🤔 ${number} is already in the phonebook.`);
     } else if (checkEmptyQuery(name, number)) {
-      alert("😱 Enter the contact's name and number phone!");
-    } else if (checkValidNumber(number)) {
-      alert("💩 Enter the correct number phone!");
+      return toast.info("😱 Enter the contact's name and number phone!");
     } else {
       dispatch(contactsOperations.addContact(name, number));
     }
@@ -68,38 +65,46 @@ function ContactForm() {
   };
 
   return (
-    <>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <label className={styles.label}>
-          Name
-          <input
-            className={styles.input}
-            type="text"
-            name="name"
-            value={name}
-            onChange={handleChange}
-            placeholder="Jason Statham"
-          />
-        </label>
-        <label className={styles.label}>
-          Number
-          <input
-            placeholder="123-45-67"
-            type="tel"
-            name="number"
-            value={number}
-            onChange={handleChange}
-            className={styles.input}
-          />
-        </label>
-        {!isLoading && (
-          <button className={styles.btn} type="submit">
-            Add contact
-          </button>
-        )}
-        {isLoading && <LoaderComponent />}
-      </form>
-    </>
+    <form className={s.form} onSubmit={handleSubmit}>
+      <label className={s.label}>
+        Name
+        <input
+          className={s.input}
+          type="text"
+          name="name"
+          value={name}
+          onChange={handleChange}
+          placeholder="Enter name"
+        />
+      </label>
+      <label className={s.label}>
+        Number
+        <NumberFormat
+          placeholder="Enter phone number"
+          format="(###) ###-##-##"
+          mask="_"
+          pattern="^[0-9\s\(\)\-]{15}"
+          type="tel"
+          name="number"
+          value={number}
+          onChange={handleChange}
+          className={s.input}
+        />
+      </label>
+
+      {!isLoading && (
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          type="submit"
+        >
+          Add contact
+        </Button>
+      )}
+
+      {isLoading && <LoaderComponent />}
+    </form>
   );
 }
 
