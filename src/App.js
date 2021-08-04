@@ -58,7 +58,7 @@ function App() {
             <ContactsView />
           </PrivateRoute>
 
-          <Route redirectTo="/">
+          <Route>
             <NotFoundView />
           </Route>
         </Switch>
